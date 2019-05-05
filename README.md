@@ -4,7 +4,8 @@ This is a demo app on how to implement Room persistance library, making use of L
 <img src="https://github.com/anitaa1990/RoomDb-Sample/blob/master/media/1.png" width="200" style="max-width:100%;">   <img src="https://github.com/anitaa1990/RoomDb-Sample/blob/master/media/2.png" width="200" style="max-width:100%;">   <img src="https://github.com/anitaa1990/RoomDb-Sample/blob/master/media/3.png" width="200" style="max-width:100%;"></br></br>
 
 <h3>How to implement Room: a SQLite object mapping library in your Android app?</h3>
-Step 1: Add following library and annotation processor to your app gradle file.
+
+**Step 1: Add following library and annotation processor to your app gradle file.**
 
 ```
 compile "android.arch.persistence.room:runtime:1.0.0"
@@ -14,10 +15,10 @@ annotationProcessor "android.arch.persistence.room:compiler:1.0.0"
 
 <b>Note:</b> The reason why annotation processor is needed is because all operations like Insert, Delete, Update etc are annotated.</br></br>
 
-Step 2: Component 1 in room - Create an entity class:</br>
+**Step 2: Component 1 in room - Create an entity class:</br>**
 This is nothing but a model class annotated with @Entity where all the variable will becomes column name for the table and name of the model class becomes name of the table. The name of the class is the table name and the variables are the columns of the table</br>
 Example: ```Note.java```</br>
-```
+```java
 @Entity
 public class Note implements Serializable {
 
@@ -99,10 +100,10 @@ public class Note implements Serializable {
 </br>
 
 
-Step 3: Component 2 in room - Create a DAO class</br>
+**Step 3: Component 2 in room - Create a DAO class</br>**
 This is an interface which acts is an intermediary between the user and the database. All the operation to be performed on a table has to be defined here. We define the list of operation that we would like to perform on table</br>
 Example: ```DaoAccess.java```</br>
-```
+```java
 @Dao
 public interface DaoAccess {
 
@@ -129,10 +130,10 @@ public interface DaoAccess {
 </br>
 
 
-Step 4: Component 3 in room - Create Database class</br>
+**Step 4: Component 3 in room - Create Database class</br>**
 This is an abstract class where you define all the entities that means all the tables that you want to create for that database. We define the list of operation that we would like to perform on table</br>
 Example: ```NoteDatabase.java```</br>
-```
+```java
 @Database(entities = {Note.class}, version = 1, exportSchema = false)
 public abstract class NoteDatabase extends RoomDatabase {
 
@@ -142,10 +143,10 @@ public abstract class NoteDatabase extends RoomDatabase {
 </br>
 
 
-Step 5: Create the Repository class</br>
+**Step 5: Create the Repository class</br>**
 A Repository mediates between the domain and data mapping layers, acting like an in-memory domain object collection. We access the database class and the DAO class from the repository and perform list of operations such as insert, update, delete, get</br>
 Example: ```NoteRepository.java```</br>
-```
+```java
 public class NoteRepository {
 
     private String DB_NAME = "db_task";
@@ -243,7 +244,7 @@ public class NoteRepository {
 
 Sample Implementation of basic CRUD operations using ROOM</br>
 <b>1. Insert:</b> </br>
-```
+```java
    NoteRepository noteRepository = new NoteRepository(getApplicationContext());
    String title = "This is the title of the third task";
    String description = "This is the description of the third task";
@@ -253,7 +254,7 @@ Sample Implementation of basic CRUD operations using ROOM</br>
 
 
 <b>2. Update:</b> </br>
-```
+```java
    NoteRepository noteRepository = new NoteRepository(getApplicationContext());
    Note note = noteRepository.getTask(2);
    note.setEncrypt(true);
@@ -267,7 +268,7 @@ Sample Implementation of basic CRUD operations using ROOM</br>
 
 
 <b>3. Delete:</b> </br>
-```
+```java
    NoteRepository noteRepository = new NoteRepository(getApplicationContext());
    noteRepository.deleteTask(3);
 ```
@@ -275,7 +276,7 @@ Sample Implementation of basic CRUD operations using ROOM</br>
 
 
 <b>4. Get all notes:</b> </br>
-```
+```java
    NoteRepository noteRepository = new NoteRepository(getApplicationContext());
 
    noteRepository.getTasks().observe(appContext, new Observer<List<Note>>() {
@@ -298,7 +299,7 @@ Sample Implementation of basic CRUD operations using ROOM</br>
 
 
 <b>5. Get single note by id:</b> </br>
-```
+```java
    NoteRepository noteRepository = new NoteRepository(getApplicationContext());
    Note note = noteRepository.getTask(2);
 ```
